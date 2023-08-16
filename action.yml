@@ -1,0 +1,35 @@
+name: Github Push Action
+description: A github action to push files from one repo to an another repo.
+author: Sreeraj V R <sreerajvr24@gmail.com>
+branding:
+  icon: chevrons-up
+  color: purple
+inputs:
+  user-name:
+    description: Github username
+    required: true
+  user-email:
+    description: Github email id
+    required: true
+  commit-message:
+    description: Commit message
+    required: true
+  target-repo:
+    description: Repo to which files needed to be copied (repo from "user-name" will be cloned)
+    required: true
+  copy-from-location:
+    description: Location of the files to be copied
+    required: true
+  remove-list:
+    description: List of files and folders to delete, names should be space separated
+    required: false
+runs:
+  using: docker
+  image: Dockerfile
+  args:
+    - ${{ inputs.user-name }}
+    - ${{ inputs.user-email }}
+    - ${{ inputs.commit-message }}
+    - ${{ inputs.target-repo }}
+    - ${{ inputs.copy-from-location }}
+    - ${{ inputs.remove-list }}
