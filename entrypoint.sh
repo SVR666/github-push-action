@@ -49,10 +49,13 @@ git clone "$GIT_CMD_REPOSITORY"
 if [ -z "$REMOVE_LIST" ]; then
   echo "[+] REMOVE_LIST not provided"
 else
-  # Split input into an array using spaces as the separator
-  list=($REMOVE_LIST)
+  # Set the field separator to space
+  IFS=' '
 
-  for item in "${list[@]}"; do
+  # Split the input using the field separator
+  set -- $REMOVE_LIST
+
+  for item in "$@"; do
     path="$TARGET_REPO/$item"
 
     echo "[+] Deleting $path"
@@ -61,7 +64,7 @@ else
 fi
 
 # rm -rf "$TARGET_REPO"/assets "$TARGET_REPO"/svg "$TARGET_REPO"/vendor "$TARGET_REPO"/index.html
-cp -r "$COPY_FROM_LOCATION" "$TARGET_REPO"
+cp -r "$COPY_FROM_LOCATION"/* "$TARGET_REPO"
 
 echo "[+] Set directory is safe ($TARGET_REPO)"
 # Related to https://github.com/cpina/github-action-push-to-another-repository/issues/64
